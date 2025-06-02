@@ -2,8 +2,8 @@ function NavBar({}){
     //TODO: update state
     return <div className="navbar">
         <h1>Le Shop</h1>
-        <p>Browse</p>
-        <p>Cart</p>
+        <a href="home">Browse</a>
+        <a href="cart">Cart</a>
     </div>
 }
 
