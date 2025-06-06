@@ -1,51 +1,112 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import NavBar from "./components/navbar";
-
+import Home from "./components/home";
+import Cart from "./components/cart";
 
 function App() {
-  const [cart, setCart] = useState([])
-  //TODO: start with cart of every object, 0 quantity?
+  const ShoppingCart = () => {
+    // Main cart state
+    const [cart, setCart] = useState([]);
 
-  //item = name, desc, img, price, quantity
+    // Add item to cart
+    const addToCart = (product) => {
+      // Check if product already exists in cart
+      const existingItemIndex = cart.findIndex(item => item.id === product.id);
 
-  const updateCart = (item) => {
-    if (cart.some(obj => obj['name'] === item.name)){
-      updateQuantity(item)
-    } else {
-      addItem(item)
-    }
-
-  }
-
-  const addItem = (item) => {
-    setCart( cart => [...cart, item])
-  }
-
-  const updateQuantity = (item) => {
-    newCart = cart.map((x) => {
-      if (x.name == item.name){
-        return {...x, quantity: item.quantity}
+      if (existingItemIndex >= 0) {
+        // If product exists, increase quantity
+        const updatedCart = [...cart];
+        updatedCart[existingItemIndex] = {
+          ...updatedCart[existingItemIndex],
+          quantity: updatedCart[existingItemIndex].quantity + 1
+        };
+        setCart(updatedCart);
       } else {
-        return {...x}
+        // If product doesn't exist, add it with quantity 1
+        setCart([...cart, { ...product, quantity: 1 }]);
       }
-    })
+    };
 
-    setCart([...newCart])
+    // Remove item from cart
+    const removeFromCart = (productId) => {
+      setCart(cart.filter(item => item.id !== productId));
+    };
+
+    // Update item quantity
+    const updateQuantity = (productId, newQuantity) => {
+      if (newQuantity <= 0) {
+        removeFromCart(productId);
+        return;
+      }
+
+      const updatedCart = cart.map(item => 
+        item.id === productId ? { ...item, quantity: newQuantity } : item
+      );
+
+      setCart(updatedCart);
+    };
+
+    // Clear the entire cart
+    const clearCart = () => {
+      setCart([]);
+    };
+
+    // Calculate cart subtotal
+    const calculateSubtotal = () => {
+      return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    };
+
+    // Get total number of items in cart
+    const getTotalItems = () => {
+      return cart.reduce((total, item) => total + item.quantity, 0);
+    };
   }
 
+  async function fetchProducts(signal) {
+    try {
+      const response = await fetch('https://fakestoreapi.com/products', {signal});
 
-  const emptyCart = () => {
-    setCart([])
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const products = await response.json();
+      console.log('Products fetched successfully:', products);
+      return products;
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      throw error;
+    }
   }
+
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    console.log('Firing Effect')
+
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    setProducts(fetchProducts(signal))
+    
+    return () => {
+      console.log('Running cleanup')
+      setProducts([]);
+      controller.abort();
+    };
+
+  },[]) 
+
+
 
   //return home or cart depending on navbar state
   return (
     <div>
       <NavBar />
-      
+      <Home products={products} cart={ShoppingCart}/>
     </div>
   )
 }
 
-export default App
+export default App;
