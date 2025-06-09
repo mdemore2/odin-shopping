@@ -1,10 +1,13 @@
-function Home({items}){
-    
+import ItemCard from "./itemcard"
+
+function Home({products, cart}){
 
 
+    //pass current quantity in cart to card for rendering
     return <div className="home">
-        {items.map((item) => {
-            return <Card key={item['id']} item={item} updateCart={updateCart}/>
+    
+        {products.map((item) => {
+            return <ItemCard key={item['id']} item={item} updateCart={cart.updateCart()}/>
         })}
 
     </div>

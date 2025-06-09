@@ -3,6 +3,7 @@ import './App.css'
 import NavBar from "./components/navbar";
 import Home from "./components/home";
 import Cart from "./components/cart";
+import { BrowserRouter, Route } from 'react-router-dom';
 
 function App() {
   const ShoppingCart = () => {
