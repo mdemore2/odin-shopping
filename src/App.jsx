@@ -76,7 +76,7 @@ function App() {
       }
 
       const data = await response.json();
-      //console.log('Products fetched successfully:', data);
+      console.log('Products fetched successfully:', data);
       setProducts(data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -91,7 +91,7 @@ function App() {
     const controller = new AbortController();
     const signal = controller.signal;
     fetchProducts();
-    console.log('Products set successfully:', products)
+    //console.log('Products set successfully:', products)
 
     
     return () => {
@@ -99,7 +99,7 @@ function App() {
       controller.abort();
     };
 
-  },[]) 
+  },[]) //nothing in dependency array, only run on mount
 
 
 
