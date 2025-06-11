@@ -6,9 +6,12 @@ import Cart from "./components/cart";
 import { BrowserRouter, Route } from 'react-router-dom';
 
 function App() {
+  const [products, setProducts] = useState([])
+
   const ShoppingCart = () => {
     // Main cart state
     const [cart, setCart] = useState([]);
+    
 
     // Add item to cart
     const addToCart = (product) => {
@@ -64,36 +67,35 @@ function App() {
     };
   }
 
-  async function fetchProducts(signal) {
+  async function fetchProducts() {
     try {
-      const response = await fetch('https://fakestoreapi.com/products', {signal});
+      const response = await fetch('https://fakestoreapi.com/products' );
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const products = await response.json();
-      console.log('Products fetched successfully:', products);
-      return products;
+      const data = await response.json();
+      //console.log('Products fetched successfully:', data);
+      setProducts(data);
     } catch (error) {
       console.error('Error fetching products:', error);
       throw error;
     }
   }
 
-  const [products, setProducts] = useState([])
 
   useEffect(() => {
     console.log('Firing Effect')
 
     const controller = new AbortController();
     const signal = controller.signal;
+    fetchProducts();
+    console.log('Products set successfully:', products)
 
-    setProducts(fetchProducts(signal))
     
     return () => {
       console.log('Running cleanup')
-      setProducts([]);
       controller.abort();
     };
 

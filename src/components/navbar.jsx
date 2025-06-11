@@ -7,4 +7,4 @@ function NavBar({}){
     </div>
 }
 
-export default NavCard;
+export default NavBar;
