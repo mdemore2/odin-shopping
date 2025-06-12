@@ -1,4 +1,5 @@
 import ItemCard from "./itemcard"
+import "../styles/home.css"
 
 function Home({products, cart}){
 

@@ -1,3 +1,6 @@
+import '../styles/itemcard.css';
+
+
 function ItemCard({item}){
     //TODO: implement :)
     //onChange={updateCart}
