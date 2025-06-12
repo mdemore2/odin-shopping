@@ -8,8 +8,10 @@ function ItemCard({item}){
         <img src={item.image} />
         <h5>{item.title}</h5>
         <p>{item.description}</p>
-        <h5>{item.price}</h5>
-        <input type="number" /> 
+        <h5>${Number.parseFloat(item.price).toFixed(2)}</h5>
+        <label>Quantity:  
+            <input type="number" placeholder='0' />
+        </label>
     </div>
 }
 
