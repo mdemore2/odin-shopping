@@ -9,8 +9,17 @@ function App({page}) {
   const [products, setProducts] = useState([])
   const [cart, setCart] = useState([]);
     
+  //TODO: does cart contain entire product object or just id and quantity?
   const handleChange = (e) => {
+    let product = products.find(x => x.id == e.target.id)
+
+    if (e.target.value == 0){
+      removeFromCart(e.target.id)
+    } else {
+      addToCart(product)
+    }
     console.log(e.target.id)
+    console.log(product)
     console.log(e.target.value)
   }
 
