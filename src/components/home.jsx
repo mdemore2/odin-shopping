@@ -1,7 +1,7 @@
 import ItemCard from "./itemcard"
 import "../styles/home.css"
 
-function Home({products, cart}){
+function Home({products, cart, handleChange}){
 
 
     //pass current quantity in cart to card for rendering
@@ -9,7 +9,7 @@ function Home({products, cart}){
     return <div className="home">
     
         {products.map((item) => {
-            return <ItemCard key={item['id']} item={item} />
+            return <ItemCard key={item['id']} item={item} handleChange={handleChange}/>
         })}
 
     </div>

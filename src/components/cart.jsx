@@ -1,4 +1,4 @@
-function Cart({}){
+function Cart({shoppingCart}){
     return <div className="cart">
     </div>
 }

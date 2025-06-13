@@ -13,11 +13,11 @@ const router = createBrowserRouter([
   },
   {
     path: "home",
-    element: <Home />,
+    element: <App page="home"/>,
   },
   {
     path: "cart",
-    element: <Cart />
+    element: <App page="cart"/>
   }
 ]);
 
@@ -26,6 +26,6 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </StrictMode>
 );
