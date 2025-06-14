@@ -16,11 +16,28 @@ function App({page}) {
     if (e.target.value == 0){
       removeFromCart(e.target.id)
     } else {
-      addToCart(product)
+      updateCart(e.target.id, e.target.value)
     }
-    console.log(e.target.id)
-    console.log(product)
-    console.log(e.target.value)
+    //console.log(e.target.id)
+    //console.log(product)
+    //console.log(e.target.value)
+
+    console.log(cart)
+  }
+
+  const updateCart = (productId, quantity) => {
+    const existingItemIndex = cart.findIndex(item => item.id === productId);
+    if (existingItemIndex >= 0) {
+      const updatedCart = [...cart];
+      updatedCart[existingItemIndex] = {
+        id: productId,
+        quantity: quantity
+      };
+      setCart(updatedCart);
+    } else {
+      // If product doesn't exist, add it with quantity 1
+      setCart([...cart, { id: productId, quantity: quantity }]);
+    }
   }
 
     // Add item to cart
