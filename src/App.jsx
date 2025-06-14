@@ -15,63 +15,33 @@ function App({page}) {
 
     if (e.target.value == 0){
       removeFromCart(e.target.id)
+      console.log('remove from cart')
     } else {
-      updateCart(e.target.id, e.target.value)
+      updateCart(product, e.target.value)
     }
-    //console.log(e.target.id)
+    console.log(e.target.id)
     //console.log(product)
-    //console.log(e.target.value)
+    console.log(e.target.value)
 
     console.log(cart)
   }
 
-  const updateCart = (productId, quantity) => {
-    const existingItemIndex = cart.findIndex(item => item.id === productId);
+  const updateCart = (product, newQuantity) => {
+    const existingItemIndex = cart.findIndex(item => item.id === product.id);
     if (existingItemIndex >= 0) {
-      const updatedCart = [...cart];
-      updatedCart[existingItemIndex] = {
-        id: productId,
-        quantity: quantity
-      };
+      const updatedCart = cart.map(item => 
+        item.id === product.id ? { ...item, quantity: newQuantity } : item
+      );
       setCart(updatedCart);
     } else {
-      // If product doesn't exist, add it with quantity 1
-      setCart([...cart, { id: productId, quantity: quantity }]);
+      // If product doesn't exist, add it with quantity
+      setCart([...cart, { ...product, quantity: newQuantity }]);
     }
   }
 
-    // Add item to cart
-  const addToCart = (product) => {
-    // Check if product already exists in cart
-    const existingItemIndex = cart.findIndex(item => item.id === product.id);
-    if (existingItemIndex >= 0) {
-      // If product exists, increase quantity
-      const updatedCart = [...cart];
-      updatedCart[existingItemIndex] = {
-        ...updatedCart[existingItemIndex],
-        quantity: updatedCart[existingItemIndex].quantity + 1
-      };
-      setCart(updatedCart);
-    } else {
-      // If product doesn't exist, add it with quantity 1
-      setCart([...cart, { ...product, quantity: 1 }]);
-    }
-  };
-
   // Remove item from cart
   const removeFromCart = (productId) => {
-    setCart(cart.filter(item => item.id !== productId));
-  };
-
-  // Update item quantity
-  const updateQuantity = (productId, newQuantity) => {
-    if (newQuantity <= 0) {
-      removeFromCart(productId);
-      return;
-    }
-    const updatedCart = cart.map(item => 
-      item.id === productId ? { ...item, quantity: newQuantity } : item
-    );
+    const updatedCart = cart.filter(item => item.id != productId)
     setCart(updatedCart);
   };
 

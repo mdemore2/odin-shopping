@@ -4,8 +4,7 @@ import "../styles/home.css"
 function Home({products, cart, handleChange}){
 
 
-    //pass current quantity in cart to card for rendering
-    //TODO pass updateCart to ItemCard for onEvent
+    //TODO pass current quantity in cart to card for rendering
     return <div className="home">
     
         {products.map((item) => {
