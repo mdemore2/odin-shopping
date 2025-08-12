@@ -1,7 +1,7 @@
 import '../styles/itemcard.css';
 
 
-function ItemCard({item, handleChange}){
+function ItemCard({item, quant, handleChange}){
     //TODO: implement :)
     //onChange={updateCart}
     return <div className="card">
@@ -10,7 +10,7 @@ function ItemCard({item, handleChange}){
         <p>{item.description}</p>
         <h5>${Number.parseFloat(item.price).toFixed(2)}</h5>
         <label>Quantity:&emsp;
-            <input type="number" min="0" placeholder='0' id={item.id} onChange={handleChange}/>
+            <input type="number" min="0" placeholder='0' value={quant} id={item.id} onChange={handleChange}/>
         </label>
     </div>
 }
