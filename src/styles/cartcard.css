@@ -1,0 +1,11 @@
+.cartCard {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin: 16px;
+}
+
+.cartCard > img {
+    max-height: 100px;
+    max-width: 100px;
+}

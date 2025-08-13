@@ -1,4 +1,5 @@
 import '../styles/itemcard.css';
+import '../styles/cartcard.css';
 
 
 function CartCard({product, quant }){
@@ -7,7 +8,7 @@ function CartCard({product, quant }){
         <img src={product.image} />
         <h5>{product.title}</h5>
         <h5>${Number.parseFloat(product.price).toFixed(2)}</h5>
-        <h5>{quant}</h5>
+        <h5>x {quant}</h5>
     </div>
 }
 
